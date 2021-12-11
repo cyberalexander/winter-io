@@ -9,5 +9,4 @@ public class WinterIoApplication {
     public static void main(String[] args) {
         SpringApplication.run(WinterIoApplication.class, args);
     }
-
 }
