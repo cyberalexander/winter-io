@@ -15,6 +15,11 @@
     <description>winter-io</description>
     <properties>
         <java.version>17</java.version>
+        <!-- ============== Dependencies versions ============== -->
+        <commons-logging.version>1.2</commons-logging.version>
+
+        <!-- ============== Plugins versions =================== -->
+        <qulice.version>0.18.19</qulice.version>
     </properties>
     <dependencies>
         <dependency>
@@ -56,5 +61,45 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>qulice</id>
+            <build>
+                <plugins>
+                    <!-- https://www.qulice.com/qulice-maven-plugin/index.html -->
+                    <plugin>
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <version>${qulice.version}</version>
+                        <configuration>
+                            <license>file:${basedir}/LICENSE</license>
+                            <excludes combine.children="append">
+                                <exclude>duplicatefinder:.*</exclude>
+                                <exclude>dependencies:org.openjdk.jmh</exclude>
+                                <exclude>checkstyle:/src/main/java/com/leonovich/winter/io/WinterIoApplication.java</exclude>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>apply-qulice-validations</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>commons-logging</groupId>
+                                <artifactId>commons-logging</artifactId>
+                                <version>${commons-logging.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
