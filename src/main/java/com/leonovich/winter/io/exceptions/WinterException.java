@@ -33,7 +33,7 @@ package com.leonovich.winter.io.exceptions;
  */
 public class WinterException extends RuntimeException {
 
-    public WinterException(Throwable cause) {
+    public WinterException(final Throwable cause) {
         super(cause);
     }
 }
