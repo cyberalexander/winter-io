@@ -10,11 +10,30 @@
     </parent>
     <groupId>com.leonovich.winter.io</groupId>
     <artifactId>winter-io</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>winter-io</name>
     <description>winter-io</description>
+    <url>https://github.com/cyberalexander/winter-io</url>
+    <licenses>
+        <license>
+            <name>${project.licence}</name>
+            <url>${project.licence.url}</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Aliaksandr Leanovich</name>
+            <email>taurum13@gmail.com</email>
+            <organization>com.leonovich.winter.io</organization>
+            <organizationUrl>https://github.com/cyberalexander/winter-io</organizationUrl>
+        </developer>
+    </developers>
     <properties>
+        <revision>0.0.2-SNAPSHOT</revision>
         <java.version>17</java.version>
+        <license>MIT License</license>
+        <license.url>https://github.com/cyberalexander/winter-io/master/LICENSE</license.url>
         <!-- ============== Dependencies versions ============== -->
         <commons-logging.version>1.2</commons-logging.version>
 
