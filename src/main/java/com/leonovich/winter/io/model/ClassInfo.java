@@ -26,7 +26,6 @@ package com.leonovich.winter.io.model;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * Created : 16/12/2021 09:48
