@@ -21,23 +21,26 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.exceptions;
+package com.leonovich.winter.io.tools;
+
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanner;
 
 /**
- * Created : 13/12/2021 09:20
+ * Created : 15/12/2021 18:06
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-public class WinterException extends RuntimeException {
+public class WinterReflections extends Reflections {
 
-    public WinterException(final Throwable cause) {
-        super(cause);
+    public WinterReflections(String packageToScan, Scanner... scanners) {
+        super(packageToScan, scanners);
     }
 
-    public WinterException(String message) {
-        super(message);
+    public <T> String extractGenericType(Class<T> implClass) {
+        return null; //TODO implement
     }
 }

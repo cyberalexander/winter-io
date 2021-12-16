@@ -21,23 +21,20 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.exceptions;
+package com.leonovich.winter.io.configuration;
+
+import com.leonovich.winter.io.tools.WinterReflections;
 
 /**
- * Created : 13/12/2021 09:20
+ * Created : 15/12/2021 18:04
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-public class WinterException extends RuntimeException {
+public interface Config {
+    <T> Class<? extends T> getImplClass(Class<T> ifc, String genericType);
 
-    public WinterException(final Throwable cause) {
-        super(cause);
-    }
-
-    public WinterException(String message) {
-        super(message);
-    }
+    WinterReflections scanner();
 }

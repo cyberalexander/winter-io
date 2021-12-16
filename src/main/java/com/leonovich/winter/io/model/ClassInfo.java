@@ -21,23 +21,29 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.exceptions;
+package com.leonovich.winter.io.model;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
- * Created : 13/12/2021 09:20
+ * Created : 16/12/2021 09:48
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-public class WinterException extends RuntimeException {
+@EqualsAndHashCode
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ClassInfo<T> {
+    private Class<T> interfaceClass;
+    private String genericType;
 
-    public WinterException(final Throwable cause) {
-        super(cause);
-    }
-
-    public WinterException(String message) {
-        super(message);
+    public static <T> ClassInfo<T> of(Class<T> interfaceClass, String genericType) {
+        return new ClassInfo<>(interfaceClass, genericType);
     }
 }

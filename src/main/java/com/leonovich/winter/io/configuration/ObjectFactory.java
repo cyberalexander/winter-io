@@ -21,23 +21,26 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.exceptions;
+package com.leonovich.winter.io.configuration;
+
+import com.leonovich.winter.io.configurators.ObjectConfigurator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created : 13/12/2021 09:20
+ * Created : 15/12/2021 18:03
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-public class WinterException extends RuntimeException {
+public class ObjectFactory {
+    private ApplicationContext context;
+    private List<ObjectConfigurator> configurators = new ArrayList<>();
 
-    public WinterException(final Throwable cause) {
-        super(cause);
-    }
-
-    public WinterException(String message) {
-        super(message);
+    public ObjectFactory(ApplicationContext applicationContext) {
+        this.context = applicationContext;
     }
 }
