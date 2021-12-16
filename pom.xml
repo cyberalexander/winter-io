@@ -30,12 +30,15 @@
         </developer>
     </developers>
     <properties>
+        <!-- ============== Project properties ================= -->
         <revision>0.0.2-SNAPSHOT</revision>
         <java.version>17</java.version>
         <license>MIT License</license>
         <license.url>https://github.com/cyberalexander/winter-io/master/LICENSE</license.url>
+
         <!-- ============== Dependencies versions ============== -->
         <commons-logging.version>1.2</commons-logging.version>
+        <reflections.version>0.10.2</reflections.version>
 
         <!-- ============== Plugins versions =================== -->
         <qulice.version>0.18.19</qulice.version>
@@ -61,6 +64,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>${reflections.version}</version>
         </dependency>
     </dependencies>
 
