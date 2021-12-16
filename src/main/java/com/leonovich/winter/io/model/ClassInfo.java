@@ -37,11 +37,10 @@ import lombok.NoArgsConstructor;
  * @version 1.0
  */
 @EqualsAndHashCode
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ClassInfo<T> {
-    private Class<T> interfaceClass;
-    private String genericType;
+    private final Class<T> interfaceClass;
+    private final String genericType;
 
     public static <T> ClassInfo<T> of(Class<T> interfaceClass, String genericType) {
         return new ClassInfo<>(interfaceClass, genericType);
