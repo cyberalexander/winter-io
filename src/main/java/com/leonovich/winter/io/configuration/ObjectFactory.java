@@ -24,9 +24,12 @@
 package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.configurators.ObjectConfigurator;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created : 15/12/2021 18:03
@@ -36,11 +39,25 @@ import java.util.List;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Log4j2
 public class ObjectFactory {
     private ApplicationContext context;
     private List<ObjectConfigurator> configurators = new ArrayList<>();
 
+    @SneakyThrows
     public ObjectFactory(ApplicationContext applicationContext) {
         this.context = applicationContext;
+
+        //[1] Instantiating object configurators on ObjectFactory initialization
+        Set<Class<? extends ObjectConfigurator>> configuratorImplClasses = this.context.getConfig().scanner()
+            .getSubTypesOf(ObjectConfigurator.class);
+        for (Class<? extends ObjectConfigurator> clazz : configuratorImplClasses) {
+            configurators.add(clazz.getDeclaredConstructor().newInstance());
+        }
+    }
+
+    @SneakyThrows
+    public <T> T createObject(Class<T> tClass) {
+        return null; //TODO continue implementation
     }
 }
