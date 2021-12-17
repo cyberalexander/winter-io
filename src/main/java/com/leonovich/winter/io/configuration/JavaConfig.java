@@ -25,8 +25,6 @@ package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.exceptions.WinterException;
 import com.leonovich.winter.io.model.ClassInfo;
-import com.leonovich.winter.io.tools.Predicates;
-import com.leonovich.winter.io.tools.PredicatesImpl;
 import com.leonovich.winter.io.tools.WinterReflections;
 import org.springframework.util.CollectionUtils;
 
@@ -42,15 +40,12 @@ import java.util.Set;
  * @version 1.0
  */
 public class JavaConfig implements Config {
-
     private final WinterReflections scanner;
     private final Map<ClassInfo, Class> ifc2implClass;
-    private final Predicates predicates;
 
     public JavaConfig(String packageToScan, Map<ClassInfo, Class> interface2implClass) {
         this.scanner = new WinterReflections(packageToScan);
         this.ifc2implClass = interface2implClass;
-        this.predicates = new PredicatesImpl();
     }
 
     @Override

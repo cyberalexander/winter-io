@@ -34,7 +34,7 @@ import com.leonovich.winter.io.tools.WinterReflections;
  * @version 1.0
  */
 public interface Config {
-    <T> Class<? extends T> getImplClass(Class<T> ifc, String genericType);
 
+    <T> Class<? extends T> getImplClass(Class<T> ifc, String genericType);
     WinterReflections scanner();
 }

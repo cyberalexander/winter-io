@@ -40,4 +40,8 @@ public class WinterException extends RuntimeException {
     public WinterException(String message) {
         super(message);
     }
+
+    public static final class ErrorMessage {
+        public static final String CANNOT_GET_OBJECT_INSTANCE = "Impossible to get Object instance by objectType=%s and genericType=%s";
+    }
 }
