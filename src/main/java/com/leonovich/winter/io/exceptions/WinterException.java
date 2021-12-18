@@ -43,5 +43,7 @@ public class WinterException extends RuntimeException {
 
     public static final class ErrorMessage {
         public static final String CANNOT_GET_OBJECT_INSTANCE = "Impossible to get Object instance by objectType=%s and genericType=%s";
+        public static final String CANNOT_FIND_IMPLEMENTATION = "Implementation class cannot be found for the given interface : %s. Searched in %s";
+        public static final String IMPLEMENTATION_NOT_FOUND = "%s has 0 implementations. Please update your configuration.";
     }
 }
