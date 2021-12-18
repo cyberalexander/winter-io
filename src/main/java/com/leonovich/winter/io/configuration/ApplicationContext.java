@@ -41,19 +41,20 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author alexanderleonovich
  * @version 1.0
  */
-public class ApplicationContext {
+@SuppressWarnings("unchecked")
+public final class ApplicationContext {
 
     @Setter
     private ObjectFactory factory;
     @Getter
-    private Config config;
+    private final Config config;
     private final Map<ClassInfo, Object> cache = new ConcurrentHashMap<>();
 
     public ApplicationContext(Config config) {
         this.config = config;
     }
 
-    public <T> T getObject(Class<T> objectType, String genericType) {
+    public <T> T getObject(final Class<T> objectType, final String genericType) {
         //1. Creating KEY
         ClassInfo<T> key = ClassInfo.of(objectType, genericType);
 

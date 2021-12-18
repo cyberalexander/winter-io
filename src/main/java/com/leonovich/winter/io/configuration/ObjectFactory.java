@@ -27,6 +27,7 @@ import com.leonovich.winter.io.configurators.ObjectConfigurator;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +58,18 @@ public class ObjectFactory {
     }
 
     @SneakyThrows
-    public <T> T createObject(Class<T> tClass) {
+    public <T> T createObject(Class<T> implClass) {
+        T t = create(implClass);
+        configure(t);
+
         return null; //TODO continue implementation
+    }
+
+    private <T> T create(Class<T> implClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        return implClass.getDeclaredConstructor().newInstance();
+    }
+
+    private <T> void configure(T t) {
+        configurators.forEach(configurator -> configurator.configure(t, context));
     }
 }
