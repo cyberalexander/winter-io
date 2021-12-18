@@ -42,11 +42,11 @@ import java.util.Set;
  */
 @Log4j2
 public class ObjectFactory {
-    private ApplicationContext context;
-    private List<ObjectConfigurator> configurators = new ArrayList<>();
+    private final ApplicationContext context;
+    private final List<ObjectConfigurator> configurators = new ArrayList<>();
 
     @SneakyThrows
-    public ObjectFactory(ApplicationContext applicationContext) {
+    public ObjectFactory(final ApplicationContext applicationContext) {
         this.context = applicationContext;
 
         //[1] Instantiating object configurators on ObjectFactory initialization
@@ -58,18 +58,18 @@ public class ObjectFactory {
     }
 
     @SneakyThrows
-    public <T> T createObject(Class<T> implClass) {
+    public <T> T createObject(final Class<T> implClass) {
         T t = create(implClass);
         configure(t);
 
         return null; //TODO continue implementation
     }
 
-    private <T> T create(Class<T> implClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private <T> T create(final Class<T> implClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         return implClass.getDeclaredConstructor().newInstance();
     }
 
-    private <T> void configure(T t) {
+    private <T> void configure(final T t) {
         configurators.forEach(configurator -> configurator.configure(t, context));
     }
 }
