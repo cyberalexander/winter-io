@@ -21,38 +21,31 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.exceptions;
+package com.leonovich.winter.io;
+
+import com.leonovich.winter.io.configuration.ApplicationContext;
+import com.leonovich.winter.io.configuration.Config;
+import com.leonovich.winter.io.configuration.JavaConfig;
+import com.leonovich.winter.io.configuration.ObjectFactory;
+import com.leonovich.winter.io.model.ClassInfo;
+
+import java.util.Map;
 
 /**
- * Created : 13/12/2021 09:20
+ * Created : 19/12/2021 10:37
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-public class WinterException extends RuntimeException {
+public class Application {
 
-    public WinterException(final Throwable cause) {
-        super(cause);
-    }
-
-    public WinterException(final String message) {
-        super(message);
-    }
-
-    public WinterException(String message, Exception cause) {
-        super(message, cause);
-    }
-
-    public static final class ErrorMessage {
-
-        private ErrorMessage() {
-        }
-
-        public static final String CANNOT_GET_OBJECT_INSTANCE = "Impossible to get Object instance by objectType=%s and genericType=%s";
-        public static final String CANNOT_FIND_IMPLEMENTATION = "Implementation class cannot be found for the given interface : %s. Searched in %s";
-        public static final String IMPLEMENTATION_NOT_FOUND = "%s has 0 implementations. Please update your configuration.";
-        public static final String POST_CONSTRUCT_FAILED = "PostConstruct invocation failed for %s.";
+    public static ApplicationContext run(String packageToScan, Map<ClassInfo, Class> ifc2ImplClass) {
+        Config config = new JavaConfig(packageToScan, ifc2ImplClass);
+        ApplicationContext context = new ApplicationContext(config);
+        ObjectFactory factory = new ObjectFactory(context);
+        context.setFactory(factory);
+        return context;
     }
 }

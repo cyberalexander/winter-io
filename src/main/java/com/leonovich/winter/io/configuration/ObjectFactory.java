@@ -24,11 +24,14 @@
 package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.configurators.ObjectConfigurator;
+import com.leonovich.winter.io.exceptions.WinterException;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
+import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -61,8 +64,8 @@ public class ObjectFactory {
     public <T> T createObject(final Class<T> implClass) {
         T t = create(implClass);
         configure(t);
-
-        return null; //TODO continue implementation
+        postConstruct(implClass, t);
+        return t;
     }
 
     private <T> T create(final Class<T> implClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -71,5 +74,17 @@ public class ObjectFactory {
 
     private <T> void configure(final T t) {
         configurators.forEach(configurator -> configurator.configure(t, context));
+    }
+
+    private <T> void postConstruct(Class<T> implClass, T t) {
+        Arrays.stream(implClass.getDeclaredMethods())
+            .filter(method -> method.isAnnotationPresent(PostConstruct.class))
+            .forEach(method -> {
+                try {
+                    method.invoke(t);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new WinterException(String.format(WinterException.ErrorMessage.POST_CONSTRUCT_FAILED, t), e);
+                }
+            });
     }
 }
