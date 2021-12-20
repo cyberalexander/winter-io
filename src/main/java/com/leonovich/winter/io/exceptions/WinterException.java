@@ -50,9 +50,13 @@ public class WinterException extends RuntimeException {
         private ErrorMessage() {
         }
 
-        public static final String CANNOT_GET_OBJECT_INSTANCE = "Impossible to get Object instance by objectType=%s and genericType=%s";
-        public static final String CANNOT_FIND_IMPLEMENTATION = "Implementation class cannot be found for the given interface : %s. Searched in %s";
-        public static final String IMPLEMENTATION_NOT_FOUND = "%s has 0 implementations. Please update your configuration.";
+        public static final String CANNOT_GET_OBJECT_INSTANCE =
+            "Impossible to get Object instance by objectType=%s and genericType=%s";
+        public static final String CANNOT_FIND_IMPLEMENTATION =
+            "Implementation class cannot be found for the given interface : %s. Searched in %s";
+        public static final String IMPLEMENTATION_NOT_FOUND =
+            "%s has 0 implementations. Please update your configuration.";
         public static final String POST_CONSTRUCT_FAILED = "PostConstruct invocation failed for %s.";
+        public static final String CANNOT_INJECT_BEAN = "System cannot access %s to inject %s in %s.";
     }
 }
