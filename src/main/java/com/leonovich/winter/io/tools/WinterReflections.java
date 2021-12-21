@@ -23,8 +23,15 @@
 
 package com.leonovich.winter.io.tools;
 
+import com.leonovich.winter.io.exceptions.WinterException;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanner;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Created : 15/12/2021 18:06
@@ -38,6 +45,13 @@ public class WinterReflections extends Reflections {
 
     public WinterReflections(String packageToScan, Scanner... scanners) {
         super(packageToScan, scanners);
+    }
+
+    public String extractGenericType(Field field) {
+        Type genericType = Arrays.stream(((ParameterizedType) field.getGenericType()).getActualTypeArguments())
+            .findFirst()
+            .orElseThrow(() -> new WinterException(String.format(WinterException.ErrorMessage.FIELD_IS_NOT_GENERIC, field)));
+        return genericType.getTypeName();
     }
 
     public <T> String extractGenericType(Class<T> implClass) {

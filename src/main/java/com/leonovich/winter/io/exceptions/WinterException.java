@@ -58,5 +58,6 @@ public class WinterException extends RuntimeException {
             "%s has 0 implementations. Please update your configuration.";
         public static final String POST_CONSTRUCT_FAILED = "PostConstruct invocation failed for %s.";
         public static final String CANNOT_INJECT_BEAN = "System cannot access %s to inject %s in %s.";
+        public static final String FIELD_IS_NOT_GENERIC = "Field : %s doesn't have generic types!";
     }
 }
