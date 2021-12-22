@@ -59,5 +59,6 @@ public class WinterException extends RuntimeException {
         public static final String POST_CONSTRUCT_FAILED = "PostConstruct invocation failed for %s.";
         public static final String CANNOT_INJECT_BEAN = "System cannot access %s to inject %s in %s.";
         public static final String FIELD_IS_NOT_GENERIC = "Field : %s doesn't have generic types!";
+        public static final String CANNOT_RESOLVE_GENERIC_TYPE = "Generic Type cannot be resolved for %s.";
     }
 }

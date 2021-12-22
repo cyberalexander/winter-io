@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
+ * Util class, which is aimed to define functionality to resolve the type of generic of given class or field.
+ * <p>
  * Created : 15/12/2021 18:06
  * Project : winter-io
  * IDE : IntelliJ IDEA
@@ -47,6 +49,13 @@ public class WinterReflections extends Reflections {
         super(packageToScan, scanners);
     }
 
+    /**
+     * Method extracts generic type from given field. If the field is not generic,
+     * a {@link WinterException} will be thrown.
+     *
+     * @param field Input field, for which need to define its generic type.
+     * @return Generic type name - the full class name including package.
+     */
     public String extractGenericType(Field field) {
         Type genericType = Arrays.stream(((ParameterizedType) field.getGenericType()).getActualTypeArguments())
             .findFirst()
@@ -54,7 +63,32 @@ public class WinterReflections extends Reflections {
         return genericType.getTypeName();
     }
 
+    /**
+     * Method extracts generic type from super-interface or super-class. if given class does not have
+     * generic super-interface or super-class, then {@link WinterException} will be thrown
+     *
+     * @param implClass Input class, for which need to define its generic type based on its super-interface/class.
+     * @param <T> The input class generic type.
+     * @return Generic type name - the full class name including package.
+     */
     public <T> String extractGenericType(Class<T> implClass) {
-        return null; //TODO implement
+        Optional<Type> interfaceType = Arrays.stream(implClass.getGenericInterfaces()).findFirst();
+        if (interfaceType.isPresent() && interfaceType.get() instanceof ParameterizedType genericInterface) {
+            return Arrays.stream(genericInterface.getActualTypeArguments())
+                .iterator()
+                .next()
+                .getTypeName();
+        } else {
+            Type classType = implClass.getGenericSuperclass();
+            if (classType instanceof ParameterizedType superClassType) {
+                return Arrays.stream(superClassType.getActualTypeArguments())
+                    .iterator()
+                    .next()
+                    .getTypeName();
+            }
+        }
+        throw new WinterException(
+            String.format(WinterException.ErrorMessage.CANNOT_RESOLVE_GENERIC_TYPE, implClass.getName())
+        );
     }
 }
