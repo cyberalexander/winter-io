@@ -78,12 +78,31 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+
+                    <!--
+                    classifier=exec added in order to pack project classes to the root of the jar instead of BOOT-INF
+                    folder. Solution found in https://stackoverflow.com/questions/40557319/spring-boot-uber-jar-packaging-classes-to-root-instead-of-boot-inf-classes
+                    -->
+                    <classifier>exec</classifier>
+
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
