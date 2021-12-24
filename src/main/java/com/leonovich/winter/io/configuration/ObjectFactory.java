@@ -27,6 +27,7 @@ import com.leonovich.winter.io.configurators.ObjectConfigurator;
 import com.leonovich.winter.io.exceptions.WinterException;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.reflections.Reflections;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.InvocationTargetException;
@@ -52,9 +53,16 @@ public class ObjectFactory {
     public ObjectFactory(final ApplicationContext applicationContext) {
         this.context = applicationContext;
 
+        /*
+        Instantiate inner Reflections object here instead of using WinterReflections is required because
+        configurators search should be performed in winter-io package not in client app package, which passed to
+        WinterReflections
+         */
+        //TODO think about if it's possible to instantiate WinterReflections with multiple packages
+        Reflections internalScanner = new Reflections("com.leonovich.winter.io");
+
         //[1] Instantiating object configurators on ObjectFactory initialization
-        Set<Class<? extends ObjectConfigurator>> configuratorImplClasses = this.context.getConfig().scanner()
-            .getSubTypesOf(ObjectConfigurator.class);
+        Set<Class<? extends ObjectConfigurator>> configuratorImplClasses = internalScanner.getSubTypesOf(ObjectConfigurator.class);
         for (Class<? extends ObjectConfigurator> clazz : configuratorImplClasses) {
             configurators.add(clazz.getDeclaredConstructor().newInstance());
         }

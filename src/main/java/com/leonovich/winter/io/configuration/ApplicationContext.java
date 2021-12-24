@@ -54,6 +54,10 @@ public final class ApplicationContext {
         this.config = config;
     }
 
+    public <T> T getObject(final Class<T> objectType) {
+        return this.getObject(objectType, "");
+    }
+
     public <T> T getObject(final Class<T> objectType, final String genericType) {
         //1. Creating KEY
         ClassInfo<T> key = ClassInfo.of(objectType, genericType);
