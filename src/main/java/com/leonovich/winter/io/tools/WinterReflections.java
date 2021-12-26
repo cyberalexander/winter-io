@@ -50,16 +50,21 @@ public class WinterReflections extends Reflections {
     }
 
     /**
-     * Method extracts generic type from given field. If the field is not generic,
-     * a {@link WinterException} will be thrown.
+     * Method extracts generic type from given field. If the field is not generic, a {@link WinterException} will
+     * be thrown.
+     * In case if field has generic type, then cast it to ParameterizedType and extract generic type
+     * or else just return field class name.
      *
      * @param field Input field, for which need to define its generic type.
      * @return Generic type name - the full class name including package.
      */
     public String extractGenericType(Field field) {
-        Type genericType = Arrays.stream(((ParameterizedType) field.getGenericType()).getActualTypeArguments())
-            .findFirst()
-            .orElseThrow(() -> new WinterException(String.format(WinterException.ErrorMessage.FIELD_IS_NOT_GENERIC, field)));
+        Type genericType = field.getGenericType();
+        if (genericType instanceof ParameterizedType parameterizedType) {
+            genericType = Arrays.stream(parameterizedType.getActualTypeArguments())
+                .findFirst()
+                .orElseThrow(() -> new WinterException(String.format(WinterException.ErrorMessage.FIELD_IS_NOT_GENERIC, field)));
+        }
         return genericType.getTypeName();
     }
 
@@ -68,7 +73,7 @@ public class WinterReflections extends Reflections {
      * generic super-interface or super-class, then {@link WinterException} will be thrown
      *
      * @param implClass Input class, for which need to define its generic type based on its super-interface/class.
-     * @param <T> The input class generic type.
+     * @param <T>       The input class generic type.
      * @return Generic type name - the full class name including package.
      */
     public <T> String extractGenericType(Class<T> implClass) {

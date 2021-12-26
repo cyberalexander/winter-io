@@ -49,13 +49,10 @@ public class InjectByTypeAnnotationObjectConfigurator implements ObjectConfigura
             .forEach(field -> {
                 field.setAccessible(true);
 
-                //TODO Fix me
-                Object injectCandidate = context.getObject(field.getType(), field.getGenericType().getTypeName());
-                /*context.getObject(
+                Object injectCandidate = context.getObject(
                     field.getType(),
                     context.getConfig().scanner().extractGenericType(field)
-                );*/
-
+                );
 
                 /*
                 t - object for which field should be populated
