@@ -95,4 +95,12 @@ public class ObjectFactory {
                 }
             });
     }
+
+    @Override
+    public String toString() {
+        return "ObjectFactory{"
+            + super.toString()
+            + "; configuratorsSize=" + configurators.size()
+            + '}';
+    }
 }

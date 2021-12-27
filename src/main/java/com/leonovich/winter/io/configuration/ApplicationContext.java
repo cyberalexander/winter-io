@@ -88,4 +88,14 @@ public final class ApplicationContext {
                 )
             );
     }
+
+    @Override
+    public String toString() {
+        return "ApplicationContext{"
+            + super.toString()
+            + "; factory=" + factory
+            + ", config=" + config
+            + ", cacheSize=" + cache.size()
+            + '}';
+    }
 }
