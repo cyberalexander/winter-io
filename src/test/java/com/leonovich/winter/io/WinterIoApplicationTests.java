@@ -8,6 +8,6 @@ class WinterIoApplicationTests {
 
     @Test
     void contextLoads() {
+        //Default unit test verifying if Spring Boot Context initialization successful
     }
-
 }

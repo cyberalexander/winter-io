@@ -47,11 +47,12 @@ import java.util.Set;
 @Log4j2
 public class ObjectFactory {
     private final ApplicationContext context;
-    private final List<ObjectConfigurator> configurators = new ArrayList<>();
+    private final List<ObjectConfigurator> configurators;
 
     @SneakyThrows
     public ObjectFactory(final ApplicationContext applicationContext) {
         this.context = applicationContext;
+        this.configurators = new ArrayList<>();
 
         /*
         Instantiate inner Reflections object here instead of using WinterReflections is required because
@@ -64,13 +65,13 @@ public class ObjectFactory {
         //[1] Instantiating object configurators on ObjectFactory initialization
         Set<Class<? extends ObjectConfigurator>> configuratorImplClasses = internalScanner.getSubTypesOf(ObjectConfigurator.class);
         for (Class<? extends ObjectConfigurator> clazz : configuratorImplClasses) {
-            configurators.add(clazz.getDeclaredConstructor().newInstance());
+            this.configurators.add(clazz.getDeclaredConstructor().newInstance());
         }
     }
 
     @SneakyThrows
     public <T> T createObject(final Class<T> implClass) {
-        T t = create(implClass);
+        final T t = create(implClass);
         configure(t);
         postConstruct(implClass, t);
         return t;

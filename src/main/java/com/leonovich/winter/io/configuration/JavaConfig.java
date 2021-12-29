@@ -43,13 +43,13 @@ public class JavaConfig implements Config {
     private final WinterReflections scanner;
     private final Map<ClassInfo, Class> ifc2implClass;
 
-    public JavaConfig(String packageToScan, Map<ClassInfo, Class> interface2implClass) {
+    public JavaConfig(final String packageToScan, final Map<ClassInfo, Class> interface2implClass) {
         this.scanner = new WinterReflections(packageToScan);
         this.ifc2implClass = interface2implClass;
     }
 
     @Override
-    public <T> Class<? extends T> getImplClass(Class<T> ifc, String genericType) {
+    public <T> Class<? extends T> getImplClass(final Class<T> ifc, String genericType) {
         ClassInfo<T> key = ClassInfo.of(ifc, genericType);
         return ifc2implClass.computeIfAbsent(key, implClass -> {
             Set<Class<? extends T>> children = scanner.getSubTypesOf(ifc);

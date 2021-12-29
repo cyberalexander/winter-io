@@ -48,10 +48,11 @@ public final class ApplicationContext {
     private ObjectFactory factory;
     @Getter
     private final Config config;
-    private final Map<ClassInfo, Object> cache = new ConcurrentHashMap<>();
+    private final Map<ClassInfo, Object> cache;
 
     public ApplicationContext(Config config) {
         this.config = config;
+        cache = new ConcurrentHashMap<>();
     }
 
     public <T> T getObject(final Class<T> objectType) {
@@ -60,7 +61,7 @@ public final class ApplicationContext {
 
     public <T> T getObject(final Class<T> objectType, final String genericType) {
         //1. Creating KEY
-        ClassInfo<T> key = ClassInfo.of(objectType, genericType);
+        final ClassInfo<T> key = ClassInfo.of(objectType, genericType);
 
         //2. Checking if Object already created and exists in cache
         if (cache.containsKey(key)) {
@@ -74,7 +75,7 @@ public final class ApplicationContext {
         }
 
         //4. Creating new object instance
-        T t = factory.createObject(implClass);
+        final T t = factory.createObject(implClass);
 
         //5. If annotated with @Singleton annotation, caching
         if (implClass.isAnnotationPresent(Singleton.class)) {
