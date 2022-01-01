@@ -39,6 +39,7 @@
         <!-- ============== Dependencies versions ============== -->
         <commons-logging.version>1.2</commons-logging.version>
         <reflections.version>0.10.2</reflections.version>
+        <log4j.version>2.14.1</log4j.version>
 
         <!-- ============== Plugins versions =================== -->
         <qulice.version>0.18.19</qulice.version>
@@ -47,6 +48,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <!--
+                spring-boot-starter-logging excluded as when winter-io injected to a non-spring application X,
+                it overwrites application's X logging configuration to some default configuration.
+                -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -69,6 +80,16 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>${reflections.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 
