@@ -63,7 +63,8 @@ public class ObjectFactory {
         Reflections internalScanner = new Reflections("com.leonovich.winter.io");
 
         //[1] Instantiating object configurators on ObjectFactory initialization
-        Set<Class<? extends ObjectConfigurator>> configuratorImplClasses = internalScanner.getSubTypesOf(ObjectConfigurator.class);
+        Set<Class<? extends ObjectConfigurator>> configuratorImplClasses =
+            internalScanner.getSubTypesOf(ObjectConfigurator.class);
         for (Class<? extends ObjectConfigurator> clazz : configuratorImplClasses) {
             this.configurators.add(clazz.getDeclaredConstructor().newInstance());
         }
@@ -77,7 +78,8 @@ public class ObjectFactory {
         return t;
     }
 
-    private <T> T create(final Class<T> implClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private <T> T create(final Class<T> implClass)
+        throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         return implClass.getDeclaredConstructor().newInstance();
     }
 

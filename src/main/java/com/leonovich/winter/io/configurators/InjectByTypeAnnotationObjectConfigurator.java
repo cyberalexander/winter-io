@@ -62,7 +62,9 @@ public class InjectByTypeAnnotationObjectConfigurator implements ObjectConfigura
                     field.set(t, injectCandidate);
                 } catch (IllegalAccessException e) {
                     throw new WinterException(
-                        String.format(WinterException.ErrorMessage.CANNOT_INJECT_BEAN, field.getName(), injectCandidate, t),
+                        String.format(
+                            WinterException.ErrorMessage.CANNOT_INJECT_BEAN, field.getName(), injectCandidate, t
+                        ),
                         e
                     );
                 }

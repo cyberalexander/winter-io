@@ -63,7 +63,9 @@ public class WinterReflections extends Reflections {
         if (genericType instanceof ParameterizedType parameterizedType) {
             genericType = Arrays.stream(parameterizedType.getActualTypeArguments())
                 .findFirst()
-                .orElseThrow(() -> new WinterException(String.format(WinterException.ErrorMessage.FIELD_IS_NOT_GENERIC, field)));
+                .orElseThrow(() -> new WinterException(
+                    String.format(WinterException.ErrorMessage.FIELD_IS_NOT_GENERIC, field))
+                );
         }
         return genericType.getTypeName();
     }

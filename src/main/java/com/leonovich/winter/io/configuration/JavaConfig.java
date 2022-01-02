@@ -54,16 +54,18 @@ public class JavaConfig implements Config {
         return ifc2implClass.computeIfAbsent(key, implClass -> {
             Set<Class<? extends T>> children = scanner.getSubTypesOf(ifc);
             if (CollectionUtils.isEmpty(children)) {
-                throw new WinterException(String.format(WinterException.ErrorMessage.IMPLEMENTATION_NOT_FOUND, ifc.getName()));
+                throw new WinterException(
+                    String.format(WinterException.ErrorMessage.IMPLEMENTATION_NOT_FOUND, ifc.getName())
+                );
             }
             if (children.size() > 1) {
                 return children.stream()
                     .filter(cl -> genericType.equals(scanner.extractGenericType(cl)))
                     .findFirst()
                     .orElseThrow(
-                        () -> new WinterException(
-                            String.format(WinterException.ErrorMessage.CANNOT_FIND_IMPLEMENTATION, ifc.getName(), children)
-                        )
+                        () -> new WinterException(String.format(
+                            WinterException.ErrorMessage.CANNOT_FIND_IMPLEMENTATION, ifc.getName(), children
+                        ))
                     );
             } else {
                 return children.iterator().next();
