@@ -27,11 +27,15 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
+
 /**
+ * The container class. Holder of the other class meta information.
+ * <p>
  * Created : 16/12/2021 09:48
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
+ * @param <T> The type of the Class, which details stored in this ClassInfo.
  * @author alexanderleonovich
  * @version 1.0
  */
@@ -41,7 +45,7 @@ public final class ClassInfo<T> {
     private final Class<T> interfaceClass;
     private final String genericType;
 
-    public static <T> ClassInfo<T> of(Class<T> interfaceClass, String genericType) {
+    public static <T> ClassInfo<T> of(final Class<T> interfaceClass, final String genericType) {
         return new ClassInfo<>(interfaceClass, genericType);
     }
 }

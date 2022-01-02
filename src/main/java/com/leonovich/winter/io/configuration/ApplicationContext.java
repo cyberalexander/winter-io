@@ -34,6 +34,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * The main part of the winter-io framework. This class manages object(s) instance(s) in application and
+ * provides the functionality of getting object(s) instance(s) for further use.
+ * <p>
  * Created : 13/12/2021 09:21
  * Project : winter-io
  * IDE : IntelliJ IDEA
@@ -50,8 +53,8 @@ public final class ApplicationContext {
     private final Config config;
     private final Map<ClassInfo, Object> cache;
 
-    public ApplicationContext(Config config) {
-        this.config = config;
+    public ApplicationContext(final Config cfg) {
+        this.config = cfg;
         cache = new ConcurrentHashMap<>();
     }
 

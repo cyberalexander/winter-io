@@ -39,7 +39,10 @@ import java.util.Map;
  * @author alexanderleonovich
  * @version 1.0
  */
-public class Application {
+public final class Application {
+
+    private Application() {
+    }
 
     public static ApplicationContext run(final String packageToScan, final Map<ClassInfo, Class> ifc2ImplClass) {
         Config config = new JavaConfig(packageToScan, ifc2ImplClass);
