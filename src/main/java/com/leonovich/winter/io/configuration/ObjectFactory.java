@@ -85,7 +85,7 @@ public class ObjectFactory {
         configurators.forEach(configurator -> configurator.configure(t, context));
     }
 
-    private <T> void postConstruct(Class<T> implClass, T t) {
+    private <T> void postConstruct(final Class<T> implClass, final T t) {
         Arrays.stream(implClass.getDeclaredMethods())
             .filter(method -> method.isAnnotationPresent(PostConstruct.class))
             .forEach(method -> {

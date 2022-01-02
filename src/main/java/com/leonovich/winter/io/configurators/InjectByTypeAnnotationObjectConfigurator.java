@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 public class InjectByTypeAnnotationObjectConfigurator implements ObjectConfigurator {
 
     @Override
-    public void configure(Object t, ApplicationContext context) {
+    public void configure(final Object t, final ApplicationContext context) {
         log.debug("Configuring {}", t);
         Stream.of(t.getClass().getDeclaredFields())
             .filter(field -> field.isAnnotationPresent(InjectByType.class))

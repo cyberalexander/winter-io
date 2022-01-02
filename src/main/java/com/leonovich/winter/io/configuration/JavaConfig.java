@@ -49,7 +49,7 @@ public class JavaConfig implements Config {
     }
 
     @Override
-    public <T> Class<? extends T> getImplClass(final Class<T> ifc, String genericType) {
+    public <T> Class<? extends T> getImplClass(final Class<T> ifc, final String genericType) {
         ClassInfo<T> key = ClassInfo.of(ifc, genericType);
         return ifc2implClass.computeIfAbsent(key, implClass -> {
             Set<Class<? extends T>> children = scanner.getSubTypesOf(ifc);
