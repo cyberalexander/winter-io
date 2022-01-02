@@ -45,7 +45,7 @@ import java.util.Optional;
  */
 public class WinterReflections extends Reflections {
 
-    public WinterReflections(String packageToScan, Scanner... scanners) {
+    public WinterReflections(final String packageToScan, final Scanner... scanners) {
         super(packageToScan, scanners);
     }
 
@@ -58,7 +58,7 @@ public class WinterReflections extends Reflections {
      * @param field Input field, for which need to define its generic type.
      * @return Generic type name - the full class name including package.
      */
-    public String extractGenericType(Field field) {
+    public String extractGenericType(final Field field) {
         Type genericType = field.getGenericType();
         if (genericType instanceof ParameterizedType parameterizedType) {
             genericType = Arrays.stream(parameterizedType.getActualTypeArguments())
@@ -76,7 +76,7 @@ public class WinterReflections extends Reflections {
      * @param <T>       The input class generic type.
      * @return Generic type name - the full class name including package.
      */
-    public <T> String extractGenericType(Class<T> implClass) {
+    public <T> String extractGenericType(final Class<T> implClass) {
         Optional<Type> interfaceType = Arrays.stream(implClass.getGenericInterfaces()).findFirst();
         if (interfaceType.isPresent() && interfaceType.get() instanceof ParameterizedType genericInterface) {
             return Arrays.stream(genericInterface.getActualTypeArguments())

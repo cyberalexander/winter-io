@@ -23,6 +23,8 @@
 
 package com.leonovich.winter.io.tools;
 
+import org.springframework.stereotype.Component;
+
 import java.util.function.Predicate;
 
 /**
@@ -33,9 +35,11 @@ import java.util.function.Predicate;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Component
 public class PredicatesImpl implements Predicates {
+
     @Override
-    public Predicate<String> isTypeOf(String targetType) {
+    public Predicate<String> isTypeOf(final String targetType) {
         return type -> type.equals(targetType);
     }
 }

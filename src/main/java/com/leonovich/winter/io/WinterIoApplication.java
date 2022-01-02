@@ -10,6 +10,8 @@ public class WinterIoApplication {
 
     public static void main(final String... args) {
         SpringApplication.run(WinterIoApplication.class, args);
-        log.info("{} started!", WinterIoApplication.class.getSimpleName());
+        if (log.isInfoEnabled()) {
+            log.info("{} started!", WinterIoApplication.class.getSimpleName());
+        }
     }
 }

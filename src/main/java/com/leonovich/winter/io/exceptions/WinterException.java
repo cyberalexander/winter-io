@@ -41,7 +41,7 @@ public class WinterException extends RuntimeException {
         super(message);
     }
 
-    public WinterException(String message, Exception cause) {
+    public WinterException(final String message, final Exception cause) {
         super(message, cause);
     }
 
