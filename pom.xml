@@ -31,13 +31,17 @@
     </developers>
     <properties>
         <!-- ============== Project properties ================= -->
-        <revision>2022.01.03-SNAPSHOT</revision>
+        <revision>2022.02.19-SNAPSHOT</revision>
         <java.version>17</java.version>
         <license>MIT License</license>
         <license.url>https://github.com/cyberalexander/winter-io/master/LICENSE</license.url>
 
         <!-- ============== Dependencies versions ============== -->
+        <log4j.version>2.17.1</log4j.version>
         <reflections.version>0.10.2</reflections.version>
+        <apache.commons.version>4.4</apache.commons.version>
+        <lombok.version>1.18.22</lombok.version>
+        <javax.api.version>1.3.2</javax.api.version>
 
         <!-- ============== Plugins versions =================== -->
         <pmd.plugin.verion>3.15.0</pmd.plugin.verion>
@@ -46,36 +50,20 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <exclusions>
-                <!--
-                spring-boot-starter-logging excluded as when winter-io injected to a non-spring application X,
-                it overwrites application's X logging configuration to some default configuration.
-                -->
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
@@ -84,21 +72,33 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${javax.api.version}</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
+            <!-- !!! Keep it as an example !!! -->
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
 
-                    <!--
+                    &lt;!&ndash;
                     classifier=exec added in order to pack project classes to the root of the jar instead of BOOT-INF
                     folder. Solution found in https://stackoverflow.com/questions/40557319/spring-boot-uber-jar-packaging-classes-to-root-instead-of-boot-inf-classes
-                    -->
+                    &ndash;&gt;
                     <classifier>exec</classifier>
 
                     <excludes>
@@ -108,7 +108,7 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

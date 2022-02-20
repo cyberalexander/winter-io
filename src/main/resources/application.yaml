@@ -1,6 +1,0 @@
-logging:
-  level:
-    root: info
-application:
-  some:
-    parameter: "some real value"

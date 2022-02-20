@@ -21,25 +21,38 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.tools;
+package com.leonovich.winter.io;
 
-import org.springframework.stereotype.Component;
+import com.leonovich.winter.io.configuration.ApplicationContext;
+import com.leonovich.winter.io.configuration.Config;
+import com.leonovich.winter.io.configuration.JavaConfig;
+import com.leonovich.winter.io.configuration.ObjectFactory;
+import com.leonovich.winter.io.model.ClassInfo;
+import lombok.extern.log4j.Log4j2;
 
-import java.util.function.Predicate;
+import java.util.Map;
 
 /**
- * Created : 16/12/2021 10:01
+ * Created : 19/12/2021 10:37
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-@Component
-public class PredicatesImpl implements Predicates {
+@Log4j2
+public final class WinterIo {
 
-    @Override
-    public Predicate<String> isTypeOf(final String targetType) {
-        return type -> type.equals(targetType);
+    private WinterIo() {
+    }
+
+    public static ApplicationContext run(final String packageToScan, final Map<ClassInfo, Class> ifc2ImplClass) {
+        log.info("WinterIo starting...");
+        Config config = new JavaConfig(packageToScan, ifc2ImplClass);
+        ApplicationContext context = new ApplicationContext(config);
+        ObjectFactory factory = new ObjectFactory(context);
+        context.setFactory(factory);
+        log.info("WinterIo started.");
+        return context;
     }
 }

@@ -26,7 +26,7 @@ package com.leonovich.winter.io.configuration;
 import com.leonovich.winter.io.exceptions.WinterException;
 import com.leonovich.winter.io.model.ClassInfo;
 import com.leonovich.winter.io.tools.WinterReflections;
-import org.springframework.util.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Map;
 import java.util.Set;
