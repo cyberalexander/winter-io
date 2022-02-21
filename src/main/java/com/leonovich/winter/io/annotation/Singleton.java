@@ -23,10 +23,14 @@
 
 package com.leonovich.winter.io.annotation;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * There will be only one instance created of the class, marked with this annotation.
+ * <p>
  * Created : 13/12/2021 09:20
  * Project : winter-io
  * IDE : IntelliJ IDEA
@@ -34,6 +38,7 @@ import java.lang.annotation.RetentionPolicy;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Singleton {
 }
