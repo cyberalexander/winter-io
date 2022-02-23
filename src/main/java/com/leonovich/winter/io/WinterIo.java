@@ -30,6 +30,7 @@ import com.leonovich.winter.io.configuration.ObjectFactory;
 import com.leonovich.winter.io.model.ClassInfo;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -54,5 +55,17 @@ public final class WinterIo {
         context.setFactory(factory);
         log.info("WinterIo started.");
         return context;
+    }
+
+    public static void main(final String[] args) {
+        String packageToScan;
+        if (args.length >= 1) {
+            packageToScan = args[0];
+        } else {
+            packageToScan = WinterIo.class.getPackageName();
+        }
+        log.info(packageToScan);
+        ApplicationContext context = WinterIo.run(packageToScan, new HashMap<>());
+        log.trace("Default context: {}", context);
     }
 }
