@@ -28,6 +28,8 @@ import com.leonovich.winter.io.model.ClassInfo;
 import com.leonovich.winter.io.tools.WinterReflections;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,7 +51,7 @@ public class JavaConfig implements Config {
     }
 
     @Override
-    public <T> Class<? extends T> getImplClass(final Class<T> ifc, final String genericType) {
+    public <T> Class<? extends T> getImplClass(final Class<T> ifc, final List<Type> genericType) {
         ClassInfo<T> key = ClassInfo.of(ifc, genericType);
         return ifc2implClass.computeIfAbsent(key, implClass -> {
             Set<Class<? extends T>> children = scanner.getSubTypesOf(ifc);

@@ -29,6 +29,9 @@ import com.leonovich.winter.io.model.ClassInfo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,10 +62,10 @@ public final class ApplicationContext {
     }
 
     public <T> T getObject(final Class<T> objectType) {
-        return this.getObject(objectType, "");
+        return this.getObject(objectType, Collections.emptyList());
     }
 
-    public <T> T getObject(final Class<T> objectType, final String genericType) {
+    public <T> T getObject(final Class<T> objectType, final List<Type> genericType) {
         //1. Creating KEY
         final ClassInfo<T> key = ClassInfo.of(objectType, genericType);
 

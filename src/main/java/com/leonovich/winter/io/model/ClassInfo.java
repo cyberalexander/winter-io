@@ -27,6 +27,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 
 /**
  * The container class. Holder of the other class meta information.
@@ -43,9 +46,16 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ClassInfo<T> {
     private final Class<T> interfaceClass;
-    private final String genericType;
+    private final List<Type> genericType;
 
-    public static <T> ClassInfo<T> of(final Class<T> interfaceClass, final String genericType) {
+    /**
+     * The method builds and returns new instance of {@link ClassInfo}
+     * @param interfaceClass The interface Class
+     * @param genericType The details about generic type
+     * @param <T> The type of the generic
+     * @return New instance of {@link ClassInfo}
+     */
+    public static <T> ClassInfo<T> of(final Class<T> interfaceClass, final List<Type> genericType) {
         return new ClassInfo<>(interfaceClass, genericType);
     }
 }

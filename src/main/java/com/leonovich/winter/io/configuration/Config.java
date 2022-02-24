@@ -25,6 +25,9 @@ package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.tools.WinterReflections;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created : 15/12/2021 18:04
  * Project : winter-io
@@ -35,6 +38,6 @@ import com.leonovich.winter.io.tools.WinterReflections;
  */
 public interface Config {
 
-    <T> Class<? extends T> getImplClass(Class<T> ifc, String genericType);
+    <T> Class<? extends T> getImplClass(Class<T> ifc, List<Type> genericType);
     WinterReflections scanner();
 }
