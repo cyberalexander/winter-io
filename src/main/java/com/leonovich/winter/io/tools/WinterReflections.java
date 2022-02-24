@@ -31,6 +31,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -58,16 +60,15 @@ public class WinterReflections extends Reflections {
      * @param field Input field, for which need to define its generic type.
      * @return Generic type name - the full class name including package.
      */
-    public String extractGenericType(final Field field) {
+    public List<Type> extractGenericType(final Field field) {
+        List<Type> genericTypeArgs;
         Type genericType = field.getGenericType();
         if (genericType instanceof ParameterizedType parameterizedType) {
-            genericType = Arrays.stream(parameterizedType.getActualTypeArguments())
-                .findFirst()
-                .orElseThrow(() -> new WinterException(
-                    String.format(WinterException.ErrorMessage.FIELD_IS_NOT_GENERIC, field))
-                );
+            genericTypeArgs = Arrays.stream(parameterizedType.getActualTypeArguments()).toList();
+        } else {
+            genericTypeArgs = Collections.singletonList(genericType);
         }
-        return genericType.getTypeName();
+        return genericTypeArgs;
     }
 
     /**
