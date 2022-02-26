@@ -28,8 +28,7 @@
     <!-- LineLength overridden from google_checks.xml and suppressed in custom_checkstyle.xml -->
     <suppress files="." checks="LineLength"/>
 
-    <suppress files="WinterIoApplication.java" checks="FinalClass"/>
-    <suppress files="WinterIoApplication.java" checks="HideUtilityClassConstructor"/>
+    <suppress files="TestData.java" checks="MagicNumber"/>
 
     <suppress files="." checks="JavadocVariable"/>
     <!--TODO candidates to be fixed. -->
