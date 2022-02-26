@@ -21,35 +21,19 @@
  ~ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
  ~ IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<Configuration status="debug" strict="true"
+<Configuration status="info" strict="true"
                xmlns="http://logging.apache.org/log4j/2.0/config"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://logging.apache.org/log4j/2.0/config
                https://raw.githubusercontent.com/apache/logging-log4j2/master/log4j-core/src/main/resources/Log4j-config.xsd">
-    <Properties>
-        <Property name="fileName">.logs/winter-io.log</Property>
-    </Properties>
     <Appenders>
-        <Appender type="File" name="File" fileName="${fileName}">
-            <Layout type="PatternLayout">
-                <Pattern>%d{dd.MM.yy HH:mm:ss.SSS} [%t] %-5level %logger{3}#%M - %msg%n</Pattern>
-            </Layout>
-        </Appender>
-        <Console name="Console" target="SYSTEM_ERR">
+        <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{dd.MM.yy HH:mm:ss.SSS} [%t] %-5level %logger{3}#%M - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <!-- Avoid duplicated logs with additivity=false -->
-        <Logger name="by.academy.it" level="debug" additivity="false">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
-        </Logger>
-        <Root level="info">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
         </Root>
     </Loggers>
 </Configuration>
-<!--
-~ https://logging.apache.org/log4j/2.x/manual/configuration.html#XML
--->
