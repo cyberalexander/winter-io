@@ -23,34 +23,19 @@
 
 package com.leonovich.winter.io.testdata;
 
-import lombok.Data;
-
-import java.math.BigInteger;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * This is class dedicated to serve as a Test Data for the unit tests.
- *
- * Created : 22/02/2022 09:15
+ * Created : 26/02/2022 10:04
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
+ * @param <K> The Key
+ * @param <V> The Value
  * @author alexanderleonovich
  * @version 1.0
  */
-@Data
-public class TestData {
-    private String nonGenericField;
-    private List<Integer> genericField;
-    private Set<?> wildCardField;
-    private Map<BigInteger, String> multiGenericField;
+public interface MultiGenericInterface<K, V> {
 
-    public TestData() {
-        this.nonGenericField = "nonGenericField";
-        this.genericField = List.of(1, 2, 3);
-        this.wildCardField = Set.of(nonGenericField, 1, 2.99, BigInteger.ONE);
-        this.multiGenericField = Map.of(BigInteger.ONE, nonGenericField);
-    }
+    Map<K, V> getData();
 }
