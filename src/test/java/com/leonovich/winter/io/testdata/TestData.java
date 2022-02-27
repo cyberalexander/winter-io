@@ -23,6 +23,8 @@
 
 package com.leonovich.winter.io.testdata;
 
+import lombok.Data;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +40,12 @@ import java.util.Set;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Data
 public class TestData {
-    protected String nonGenericField;
-    protected List<Integer> genericField;
-    protected Set<?> wildCardField;
-    protected Map<BigInteger, String> multiGenericField;
+    private String nonGenericField;
+    private List<Integer> genericField;
+    private Set<?> wildCardField;
+    private Map<BigInteger, String> multiGenericField;
 
     public TestData() {
         this.nonGenericField = "nonGenericField";
