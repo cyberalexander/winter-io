@@ -87,7 +87,7 @@ public class WinterReflections extends Reflections {
      *
      * @param implClass Input class, for which need to define its generic type based on its super-interface/class.
      * @param <T>       The input class generic type.
-     * @return Generic type name - the full class name including package.
+     * @return          Generic type name - the full class name including package.
      */
     public <T> List<Type> extractGenericType(final Class<T> implClass) {
         Optional<Type> interfaceType = Arrays.stream(implClass.getGenericInterfaces()).findFirst();
