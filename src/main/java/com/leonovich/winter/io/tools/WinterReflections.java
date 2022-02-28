@@ -23,7 +23,6 @@
 
 package com.leonovich.winter.io.tools;
 
-import com.leonovich.winter.io.exceptions.WinterException;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanner;
 
@@ -52,10 +51,21 @@ public class WinterReflections extends Reflections {
     }
 
     /**
-     * Method extracts generic type from given field. If the field is not generic, a {@link WinterException} will
-     * be thrown.
-     * In case if field has generic type, then cast it to ParameterizedType and extract generic type
+     * Method extracts generic type from given field. If the field is not generic, then the type of the Field self will
+     * be returned. In case if field has generic type, then cast it to ParameterizedType and extract generic type
      * or else just return field class name.
+     * <p>
+     * Example 1:
+     * <code>
+     * private String hello;
+     * </code>
+     * Field 'hello' is not generic and List.of(java.lang.String) expected to be returned
+     * <p>
+     * Example 2:
+     * <code>
+     * private List<Integer> integers;
+     * </code>
+     * Field 'integers' has generic type and List.of(java.lang.Integer) will be returned
      *
      * @param field Input field, for which need to define its generic type.
      * @return Generic type name - the full class name including package.
@@ -73,30 +83,21 @@ public class WinterReflections extends Reflections {
 
     /**
      * Method extracts generic type from super-interface or super-class. if given class does not have
-     * generic super-interface or super-class, then {@link WinterException} will be thrown
+     * generic super-interface or super-class, then the type of the Class self will be returned.
      *
      * @param implClass Input class, for which need to define its generic type based on its super-interface/class.
      * @param <T>       The input class generic type.
      * @return Generic type name - the full class name including package.
      */
-    public <T> String extractGenericType(final Class<T> implClass) {
+    public <T> List<Type> extractGenericType(final Class<T> implClass) {
         Optional<Type> interfaceType = Arrays.stream(implClass.getGenericInterfaces()).findFirst();
         if (interfaceType.isPresent() && interfaceType.get() instanceof ParameterizedType genericInterface) {
-            return Arrays.stream(genericInterface.getActualTypeArguments())
-                .iterator()
-                .next()
-                .getTypeName();
+            return List.of(genericInterface.getActualTypeArguments());
+        } else if (implClass.getGenericSuperclass() != null
+            && implClass.getGenericSuperclass() instanceof ParameterizedType superClassType) {
+            return List.of(superClassType.getActualTypeArguments());
         } else {
-            Type classType = implClass.getGenericSuperclass();
-            if (classType instanceof ParameterizedType superClassType) {
-                return Arrays.stream(superClassType.getActualTypeArguments())
-                    .iterator()
-                    .next()
-                    .getTypeName();
-            }
+            return List.of(implClass);
         }
-        throw new WinterException(
-            String.format(WinterException.ErrorMessage.CANNOT_RESOLVE_GENERIC_TYPE, implClass.getName())
-        );
     }
 }
