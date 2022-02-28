@@ -23,6 +23,11 @@
 
 package com.leonovich.winter.io.tools;
 
+import com.leonovich.winter.io.testdata.GenericClass;
+import com.leonovich.winter.io.testdata.MultiGenericClass;
+import com.leonovich.winter.io.testdata.NonGenericClass;
+import com.leonovich.winter.io.testdata.StandaloneGenericClass;
+import com.leonovich.winter.io.testdata.StandaloneNonGenericClass;
 import com.leonovich.winter.io.testdata.TestData;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
@@ -60,7 +65,11 @@ class WinterReflectionsTests {
         Assertions.assertEquals(
             String.class.getName(),
             extractedGenericType,
-            String.format("Extracted generic type expected to be '%s' but it's '%s'", String.class.getName(), extractedGenericType)
+            String.format(
+                "Extracted generic type expected to be '%s' but it's '%s'",
+                String.class.getName(),
+                extractedGenericType
+            )
         );
     }
 
@@ -77,7 +86,9 @@ class WinterReflectionsTests {
         Assertions.assertEquals(
             Integer.class.getName(),
             extractedGenericType,
-            String.format("Extracted generic type expected to be '%s' but it's '%s'", String.class.getName(), extractedGenericType)
+            String.format(
+                "Extracted generic type expected to be '%s' but it's '%s'", String.class.getName(), extractedGenericType
+            )
         );
     }
 
@@ -94,7 +105,9 @@ class WinterReflectionsTests {
         Assertions.assertEquals(
             "?",
             extractedGenericType,
-            String.format("Extracted generic type expected to be '%s' but it's '%s'", String.class.getName(), extractedGenericType)
+            String.format(
+                "Extracted generic type expected to be '%s' but it's '%s'", String.class.getName(), extractedGenericType
+            )
         );
     }
 
@@ -115,7 +128,82 @@ class WinterReflectionsTests {
         Assertions.assertEquals(
             expected,
             actual,
-            String.format("Extracted generic type expected to be %s, but it's %s", expected, actual)
+            String.format(
+                "Extracted generic type expected to be %s, but it's %s", expected, actual
+            )
+        );
+    }
+
+    @Test
+    void testExtractGenericTypeFromGenericClass() {
+        List<Type> genericType = wr.extractGenericType(GenericClass.class);
+        log.debug("Generic Type : {}", genericType);
+        Assertions.assertEquals(
+            List.of(TestData.class),
+            genericType,
+            String.format(
+                "Extracted generic type expected to be %s, but it's %s", List.of(TestData.class), genericType
+            )
+        );
+    }
+
+    @Test
+    void testExtractGenericTypeFromMultiGenericClass() {
+        List<Type> genericType = wr.extractGenericType(MultiGenericClass.class);
+        log.debug("Generic Type : {}", genericType);
+        Assertions.assertEquals(
+            List.of(BigInteger.class, TestData.class),
+            genericType,
+            String.format(
+                "Extracted generic type expected to be %s, but it's %s",
+                List.of(BigInteger.class, TestData.class),
+                genericType
+            )
+        );
+    }
+
+    @Test
+    void testExtractGenericTypeFromNonGenericClass() {
+        List<Type> genericType = wr.extractGenericType(NonGenericClass.class);
+        log.debug("Generic Type : {}", genericType);
+        Assertions.assertEquals(
+            List.of(NonGenericClass.class),
+            genericType,
+            String.format(
+                "Extracted generic type expected to be %s, but it's %s",
+                List.of(NonGenericClass.class),
+                genericType
+            )
+        );
+    }
+
+    @Test
+    void testExtractGenericTypeFromStandaloneGenericClass() {
+        List<Type> genericType = wr.extractGenericType(StandaloneGenericClass.class);
+        log.debug("Generic Type : {}", genericType);
+        Assertions.assertEquals(
+            List.of(StandaloneGenericClass.class),
+            genericType,
+            String.format(
+                "Extracted generic type expected to be %s, but it's %s",
+                List.of(StandaloneGenericClass.class),
+                genericType
+            )
+        );
+    }
+
+    @Test
+    void testExtractGenericTypeFromStandaloneNonGenericClass() {
+        List<Type> genericType = wr.extractGenericType(StandaloneNonGenericClass.class);
+        log.debug("Generic Type : {}", genericType);
+        Assertions.assertEquals(
+            List.of(StandaloneNonGenericClass.class),
+            genericType,
+            String.format(
+                "Extracted generic type expected to be %s, but it's %s",
+                List.of(StandaloneNonGenericClass.class),
+                genericType
+            )
         );
     }
 }
