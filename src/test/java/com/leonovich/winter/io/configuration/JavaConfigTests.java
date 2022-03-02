@@ -23,13 +23,18 @@
 
 package com.leonovich.winter.io.configuration;
 
+import com.leonovich.winter.io.exceptions.WinterException;
 import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
+import com.leonovich.winter.io.testdata.NonGenericClass;
+import com.leonovich.winter.io.testdata.NonGenericInterface;
+import com.leonovich.winter.io.testdata.StandaloneGenericClass;
 import com.leonovich.winter.io.testdata.TestData;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,6 +63,48 @@ class JavaConfigTests {
                 GenericClass.class.getSimpleName(),
                 implClass.getSimpleName()
             )
+        );
+    }
+
+    @Test
+    void testGetImplClassFromNonGenericInterface() {
+        Class<? extends NonGenericInterface> ic = jc.getImplClass(NonGenericInterface.class, Collections.emptyList());
+        log.debug("Implementation: {}", ic);
+        Assertions.assertEquals(
+            NonGenericClass.class,
+            ic,
+            String.format(
+                "Implementation of %s class expected to be '%s' but it's '%s'",
+                NonGenericInterface.class.getSimpleName(),
+                NonGenericClass.class.getSimpleName(),
+                ic.getSimpleName()
+            )
+        );
+    }
+
+    /**
+     * Exception expected to be thrown, in case if {@link JavaConfig#getImplClass} called
+     * for the class or interface which does not have implementations/children.
+     */
+    @Test
+    void testGetImplClassThrowsException() {
+        Assertions.assertThrows(
+            WinterException.class,
+            () -> jc.getImplClass(StandaloneGenericClass.class, Collections.emptyList())
+        );
+    }
+
+    @Test
+    void testGetImplClassThrowsException1() {
+        WinterException exception = Assertions.assertThrows(
+            WinterException.class,
+            () -> jc.getImplClass(StandaloneGenericClass.class, Collections.emptyList())
+        );
+        Assertions.assertEquals(
+            String.format(
+                WinterException.ErrorMessage.IMPLEMENTATION_NOT_FOUND, StandaloneGenericClass.class.getName()
+            ),
+            exception.getMessage()
         );
     }
 }
