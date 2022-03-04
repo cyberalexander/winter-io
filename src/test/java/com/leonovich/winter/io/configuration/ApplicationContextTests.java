@@ -24,11 +24,15 @@
 package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.testdata.GenericClass;
+import com.leonovich.winter.io.testdata.GenericInterface;
+import com.leonovich.winter.io.testdata.TestData;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created : 28/02/2022 09:59
@@ -38,6 +42,7 @@ import java.util.HashMap;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Log4j2
 class ApplicationContextTests {
     private static ApplicationContext context;
 
@@ -50,12 +55,30 @@ class ApplicationContextTests {
     }
 
     @Test
-    void test() {
+    void testGetObjectReturnsNotNull() {
         GenericClass instance = context.getObject(GenericClass.class);
         Assertions.assertNotNull(instance,
             String.format(
                 "Expected to get new instance from %s class, but was NULL.",
                 GenericClass.class.getSimpleName()
+            )
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testGetObjectReturnsProperInstance() {
+        GenericInterface<TestData> instance = context.getObject(GenericInterface.class, List.of(TestData.class));
+
+        if (log.isDebugEnabled()) {
+            log.debug("Retrieved instance of {}", instance.getClass().getSimpleName());
+        }
+
+        Assertions.assertInstanceOf(GenericClass.class,
+            instance,
+            String.format(
+                "Expected to get new instance of %s class, but retrieved %s.",
+                GenericClass.class.getSimpleName(), instance.getClass().getSimpleName()
             )
         );
     }
