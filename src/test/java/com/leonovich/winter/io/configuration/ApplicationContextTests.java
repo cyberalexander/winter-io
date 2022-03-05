@@ -25,12 +25,15 @@ package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
+import com.leonovich.winter.io.testdata.MultiGenericClass;
+import com.leonovich.winter.io.testdata.MultiGenericInterface;
 import com.leonovich.winter.io.testdata.TestData;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 
@@ -75,6 +78,27 @@ class ApplicationContextTests {
         }
 
         Assertions.assertInstanceOf(GenericClass.class,
+            instance,
+            String.format(
+                "Expected to get new instance of %s class, but retrieved %s.",
+                GenericClass.class.getSimpleName(), instance.getClass().getSimpleName()
+            )
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testGetObjectReturnsProperInstance1() {
+        MultiGenericInterface<BigInteger, TestData> instance = context.getObject(
+            MultiGenericInterface.class,
+            List.of(BigInteger.class, TestData.class)
+        );
+
+        if (log.isDebugEnabled()) {
+            log.debug("Retrieved instance of {}", instance.getClass().getSimpleName());
+        }
+
+        Assertions.assertInstanceOf(MultiGenericClass.class,
             instance,
             String.format(
                 "Expected to get new instance of %s class, but retrieved %s.",
