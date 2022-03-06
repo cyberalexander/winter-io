@@ -70,7 +70,7 @@ public class JavaConfig implements Config {
                         ))
                     );
             } else {
-                return children.iterator().next();
+                return children.iterator().next(); //TODO fix it https://github.com/cyberalexander/winter-io/issues/13
             }
         });
     }
