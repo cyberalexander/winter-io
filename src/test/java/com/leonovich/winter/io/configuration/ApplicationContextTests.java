@@ -27,6 +27,8 @@ import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
 import com.leonovich.winter.io.testdata.MultiGenericClass;
 import com.leonovich.winter.io.testdata.MultiGenericInterface;
+import com.leonovich.winter.io.testdata.NonGenericClass;
+import com.leonovich.winter.io.testdata.NonGenericInterface;
 import com.leonovich.winter.io.testdata.TestData;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
@@ -70,7 +72,7 @@ class ApplicationContextTests {
 
     @Test
     @SuppressWarnings("unchecked")
-    void testGetObjectReturnsProperInstance() {
+    void testGetObjectReturnsProperSingleGenericInstance() {
         GenericInterface<TestData> instance = context.getObject(GenericInterface.class, List.of(TestData.class));
 
         if (log.isDebugEnabled()) {
@@ -88,7 +90,7 @@ class ApplicationContextTests {
 
     @Test
     @SuppressWarnings("unchecked")
-    void testGetObjectReturnsProperInstance1() {
+    void testGetObjectReturnsProperMultipleGenericInstance() {
         MultiGenericInterface<BigInteger, TestData> instance = context.getObject(
             MultiGenericInterface.class,
             List.of(BigInteger.class, TestData.class)
@@ -102,7 +104,24 @@ class ApplicationContextTests {
             instance,
             String.format(
                 "Expected to get new instance of %s class, but retrieved %s.",
-                GenericClass.class.getSimpleName(), instance.getClass().getSimpleName()
+                MultiGenericClass.class.getSimpleName(), instance.getClass().getSimpleName()
+            )
+        );
+    }
+
+    @Test
+    void testGetObjectReturnsProperNonGenericInstance() {
+        NonGenericInterface instance = context.getObject(NonGenericInterface.class);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Retrieved instance of {}", instance.getClass().getSimpleName());
+        }
+
+        Assertions.assertInstanceOf(NonGenericClass.class,
+            instance,
+            String.format(
+                "Expected to get new instance of %s class, but retrieved %s.",
+                NonGenericClass.class.getSimpleName(), instance.getClass().getSimpleName()
             )
         );
     }
