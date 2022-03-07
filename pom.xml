@@ -43,6 +43,8 @@
         <lombok.version>1.18.22</lombok.version>
         <javax.api.version>1.3.2</javax.api.version>
         <junit.version>5.8.2</junit.version>
+        <cactoos.version>0.50</cactoos.version>
+        <cactoos-matchers.version>0.25</cactoos-matchers.version>
 
         <!-- ============== Plugins versions =================== -->
         <pmd.plugin.verion>3.15.0</pmd.plugin.verion>
@@ -90,6 +92,23 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cactoos</groupId>
+            <artifactId>cactoos</artifactId>
+            <version>${cactoos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.llorllale</groupId>
+            <artifactId>cactoos-matchers</artifactId>
+            <version>${cactoos-matchers.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -185,8 +204,12 @@
                                 </goals>
                                 <configuration>
                                     <failOnViolation>true</failOnViolation>
-                                    <suppressionsLocation>src/main/resources/quality/checkstyle_suppressions.xml</suppressionsLocation>
-                                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                                    <suppressionsLocation>
+                                        src/main/resources/quality/checkstyle_suppressions.xml
+                                    </suppressionsLocation>
+                                    <suppressionsFileExpression>
+                                        checkstyle.suppressions.file
+                                    </suppressionsFileExpression>
                                 </configuration>
                             </execution>
                             <execution>
@@ -197,7 +220,9 @@
                                 </goals>
                                 <configuration>
                                     <configLocation>src/main/resources/quality/custom_checkstyle.xml</configLocation>
-                                    <suppressionsLocation>src/main/resources/quality/custom_checkstyle_suppressions.xml</suppressionsLocation>
+                                    <suppressionsLocation>
+                                        src/main/resources/quality/custom_checkstyle_suppressions.xml
+                                    </suppressionsLocation>
                                 </configuration>
                             </execution>
                         </executions>

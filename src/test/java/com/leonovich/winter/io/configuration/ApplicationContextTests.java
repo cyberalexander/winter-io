@@ -25,6 +25,7 @@ package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
+import com.leonovich.winter.io.testdata.StandaloneGenericClass;
 import com.leonovich.winter.io.testdata.MultiGenericClass;
 import com.leonovich.winter.io.testdata.MultiGenericInterface;
 import com.leonovich.winter.io.testdata.NonGenericClass;
@@ -34,10 +35,14 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created : 28/02/2022 09:59
@@ -59,13 +64,23 @@ class ApplicationContextTests {
         context.setFactory(factory);
     }
 
-    @Test
-    void testGetObjectReturnsNotNull() {
-        GenericClass instance = context.getObject(GenericClass.class);
+    private static Stream<Arguments> getObjectReturnsNotNullSource() {
+        return Stream.of(
+            Arguments.of(GenericClass.class),
+            Arguments.of(NonGenericClass.class),
+            Arguments.of(StandaloneGenericClass.class),
+            Arguments.of(MultiGenericInterface.class)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getObjectReturnsNotNullSource")
+    void testGetObjectReturnsNotNull(final Class<?> input) {
+        Object instance = context.getObject(input);
         Assertions.assertNotNull(instance,
             String.format(
                 "Expected to get new instance from %s class, but was NULL.",
-                GenericClass.class.getSimpleName()
+                input.getSimpleName()
             )
         );
     }
