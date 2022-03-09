@@ -23,6 +23,7 @@
 
 package com.leonovich.winter.io.configuration;
 
+import com.leonovich.winter.io.testdata.AbstractClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -51,13 +52,25 @@ class ObjectFactoryTests {
 
     /**
      * Exception expected to be thrown, in case if {@link ObjectFactory#createObject(Class)} called
-     * for the interface or abstract class.
+     * for the interface class.
      */
     @Test
     void testCreateObjectThrowsExceptionWhenInterfacePassed() {
         Assertions.assertThrows(
             NoSuchMethodException.class,
             () -> factory.createObject(GenericInterface.class)
+        );
+    }
+
+    /**
+     * Exception expected to be thrown, in case if {@link ObjectFactory#createObject(Class)} called
+     * for the abstract class.
+     */
+    @Test
+    void testCreateObjectThrowsExceptionWhenAbstractClassPassed() {
+        Assertions.assertThrows(
+            InstantiationException.class,
+            () -> factory.createObject(AbstractClass.class)
         );
     }
 }
