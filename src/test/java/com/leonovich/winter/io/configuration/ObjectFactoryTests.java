@@ -24,12 +24,22 @@
 package com.leonovich.winter.io.configuration;
 
 import com.leonovich.winter.io.testdata.AbstractClass;
+import com.leonovich.winter.io.testdata.AbstractClassImpl;
+import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
+import com.leonovich.winter.io.testdata.MultiGenericClass;
+import com.leonovich.winter.io.testdata.StandaloneGenericClass;
+import com.leonovich.winter.io.testdata.StandaloneNonGenericClass;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 /**
  * Created : 28/02/2022 09:59
@@ -39,6 +49,7 @@ import java.util.HashMap;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Log4j2
 class ObjectFactoryTests {
     private static ObjectFactory factory;
 
@@ -71,6 +82,25 @@ class ObjectFactoryTests {
         Assertions.assertThrows(
             InstantiationException.class,
             () -> factory.createObject(AbstractClass.class)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getClassesToCreateObjects")
+    void testCreateObject(final Class<?> implClass) {
+        Assertions.assertNotNull(
+            factory.createObject(implClass),
+            "Created object must not be null."
+        );
+    }
+
+    private static Stream<Arguments> getClassesToCreateObjects() {
+        return Stream.of(
+            Arguments.of(GenericClass.class),
+            Arguments.of(MultiGenericClass.class),
+            Arguments.of(StandaloneGenericClass.class),
+            Arguments.of(StandaloneNonGenericClass.class),
+            Arguments.of(AbstractClassImpl.class)
         );
     }
 }

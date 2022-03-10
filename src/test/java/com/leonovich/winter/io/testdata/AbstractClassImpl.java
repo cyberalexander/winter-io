@@ -23,6 +23,8 @@
 
 package com.leonovich.winter.io.testdata;
 
+import lombok.extern.log4j.Log4j2;
+
 /**
  * Created : 09/03/2022 10:30
  * Project : winter-io
@@ -31,10 +33,11 @@ package com.leonovich.winter.io.testdata;
  * @author alexanderleonovich
  * @version 1.0
  */
+@Log4j2
 public class AbstractClassImpl extends AbstractClass {
 
     @Override
     public void abstractMethod() {
-
+        log.debug("Inside abstractMethod implementation.");
     }
 }
