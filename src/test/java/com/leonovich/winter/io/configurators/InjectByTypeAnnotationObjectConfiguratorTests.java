@@ -21,29 +21,29 @@
  * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.leonovich.winter.io.testdata;
+package com.leonovich.winter.io.configurators;
 
-import com.leonovich.winter.io.annotation.InjectByType;
+import com.leonovich.winter.io.WinterIoAbstractTests;
+import com.leonovich.winter.io.testdata.GenericClass;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Created : 24/02/2022 09:26
+ * Created : 14/03/2022 10:31
  * Project : winter-io
  * IDE : IntelliJ IDEA
  *
  * @author alexanderleonovich
  * @version 1.0
  */
-public class GenericClass implements GenericInterface<TestData> {
+class InjectByTypeAnnotationObjectConfiguratorTests extends WinterIoAbstractTests {
+    private final ObjectConfigurator configurator = new InjectByTypeAnnotationObjectConfigurator();
 
-    @InjectByType
-    private StandaloneGenericClass<TestData> injectByType;
+    @Test
+    void testConfigure() {
+        GenericClass instance = new GenericClass();
+        configurator.configure(instance, context);
 
-    @Override
-    public TestData getData() {
-        return injectByType.getData();
-    }
-
-    public StandaloneGenericClass<TestData> getInjectedField() {
-        return this.injectByType;
+        Assertions.assertNotNull(instance.getInjectedField());
     }
 }
