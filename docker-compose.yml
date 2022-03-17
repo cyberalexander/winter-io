@@ -1,0 +1,10 @@
+# https://docs.docker.com/compose/compose-file/
+version: "3.8"
+services:
+  winter-io:
+    image: cyberalexander/winter-io:latest
+    container_name: winter-io
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: on-failure
