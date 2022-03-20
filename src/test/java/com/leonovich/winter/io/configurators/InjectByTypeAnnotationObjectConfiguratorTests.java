@@ -42,7 +42,7 @@ class InjectByTypeAnnotationObjectConfiguratorTests extends WinterIoAbstractTest
     @Test
     void testConfigure() {
         GenericClass instance = new GenericClass();
-        configurator.configure(instance, context);
+        configurator.configure(instance, context());
 
         Assertions.assertNotNull(instance.getInjectedField());
     }
