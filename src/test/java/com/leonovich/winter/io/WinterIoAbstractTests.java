@@ -39,10 +39,11 @@ import java.util.HashMap;
  * @author alexanderleonovich
  * @version 1.0
  */
+@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class WinterIoAbstractTests {
-    protected static ApplicationContext context;
-    protected static Config config;
-    protected static ObjectFactory factory;
+    private static ApplicationContext context;
+    private static Config config;
+    private static ObjectFactory factory;
 
     @BeforeAll
     static void beforeAll() {
@@ -50,5 +51,17 @@ public abstract class WinterIoAbstractTests {
         context = new ApplicationContext(config);
         factory = new ObjectFactory(context);
         context.setFactory(factory);
+    }
+
+    public ApplicationContext context() {
+        return context;
+    }
+
+    public Config config() {
+        return config;
+    }
+
+    public ObjectFactory factory() {
+        return factory;
     }
 }
