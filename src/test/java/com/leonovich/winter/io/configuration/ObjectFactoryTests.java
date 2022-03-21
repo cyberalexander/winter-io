@@ -23,6 +23,7 @@
 
 package com.leonovich.winter.io.configuration;
 
+import com.leonovich.winter.io.WinterIoAbstractTests;
 import com.leonovich.winter.io.testdata.AbstractClass;
 import com.leonovich.winter.io.testdata.AbstractClassImpl;
 import com.leonovich.winter.io.testdata.GenericClass;
@@ -32,13 +33,11 @@ import com.leonovich.winter.io.testdata.StandaloneGenericClass;
 import com.leonovich.winter.io.testdata.StandaloneNonGenericClass;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
 import java.util.stream.Stream;
 
 /**
@@ -50,16 +49,7 @@ import java.util.stream.Stream;
  * @version 1.0
  */
 @Log4j2
-class ObjectFactoryTests {
-    private static ObjectFactory factory;
-
-    @BeforeAll
-    static void beforeAll() {
-        Config config = new JavaConfig("com.leonovich.winter.io.testdata", new HashMap<>());
-        ApplicationContext context = new ApplicationContext(config);
-        factory = new ObjectFactory(context);
-        context.setFactory(factory);
-    }
+class ObjectFactoryTests extends WinterIoAbstractTests {
 
     /**
      * Exception expected to be thrown, in case if {@link ObjectFactory#createObject(Class)} called
@@ -69,7 +59,7 @@ class ObjectFactoryTests {
     void testCreateObjectThrowsExceptionWhenInterfacePassed() {
         Assertions.assertThrows(
             NoSuchMethodException.class,
-            () -> factory.createObject(GenericInterface.class)
+            () -> factory().createObject(GenericInterface.class)
         );
     }
 
@@ -81,7 +71,7 @@ class ObjectFactoryTests {
     void testCreateObjectThrowsExceptionWhenAbstractClassPassed() {
         Assertions.assertThrows(
             InstantiationException.class,
-            () -> factory.createObject(AbstractClass.class)
+            () -> factory().createObject(AbstractClass.class)
         );
     }
 
@@ -89,7 +79,7 @@ class ObjectFactoryTests {
     @MethodSource("getClassesToCreateObjects")
     void testCreateObject(final Class<?> implClass) {
         Assertions.assertNotNull(
-            factory.createObject(implClass),
+            factory().createObject(implClass),
             "Created object must not be null."
         );
     }

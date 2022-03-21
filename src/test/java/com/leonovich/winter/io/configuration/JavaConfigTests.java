@@ -23,6 +23,7 @@
 
 package com.leonovich.winter.io.configuration;
 
+import com.leonovich.winter.io.WinterIoAbstractTests;
 import com.leonovich.winter.io.exceptions.WinterException;
 import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
@@ -35,7 +36,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,12 +47,13 @@ import java.util.List;
  * @version 1.0
  */
 @Log4j2
-class JavaConfigTests {
-    private final JavaConfig jc = new JavaConfig("com.leonovich.winter.io.testdata", new HashMap<>());
+class JavaConfigTests extends WinterIoAbstractTests {
 
     @Test
     void testGetImplClassFromGenericInterface() {
-        Class<? extends GenericInterface> implClass = jc.getImplClass(GenericInterface.class, List.of(TestData.class));
+        Class<? extends GenericInterface> implClass = config().getImplClass(
+            GenericInterface.class, List.of(TestData.class)
+        );
         log.debug("Implementation: {}", implClass);
         Assertions.assertEquals(
             GenericClass.class,
@@ -68,7 +69,9 @@ class JavaConfigTests {
 
     @Test
     void testGetImplClassFromNonGenericInterface() {
-        Class<? extends NonGenericInterface> ic = jc.getImplClass(NonGenericInterface.class, Collections.emptyList());
+        Class<? extends NonGenericInterface> ic = config().getImplClass(
+            NonGenericInterface.class, Collections.emptyList()
+        );
         log.debug("Implementation: {}", ic);
         Assertions.assertEquals(
             NonGenericClass.class,
@@ -90,7 +93,7 @@ class JavaConfigTests {
     void testGetImplClassThrowsException() {
         Assertions.assertThrows(
             WinterException.class,
-            () -> jc.getImplClass(StandaloneGenericClass.class, Collections.emptyList())
+            () -> config().getImplClass(StandaloneGenericClass.class, Collections.emptyList())
         );
     }
 
@@ -98,7 +101,7 @@ class JavaConfigTests {
     void testGetImplClassThrowsException1() {
         WinterException exception = Assertions.assertThrows(
             WinterException.class,
-            () -> jc.getImplClass(StandaloneGenericClass.class, Collections.emptyList())
+            () -> config().getImplClass(StandaloneGenericClass.class, Collections.emptyList())
         );
         Assertions.assertEquals(
             String.format(

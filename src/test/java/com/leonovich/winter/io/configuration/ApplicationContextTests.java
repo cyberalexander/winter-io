@@ -23,6 +23,7 @@
 
 package com.leonovich.winter.io.configuration;
 
+import com.leonovich.winter.io.WinterIoAbstractTests;
 import com.leonovich.winter.io.testdata.GenericClass;
 import com.leonovich.winter.io.testdata.GenericInterface;
 import com.leonovich.winter.io.testdata.StandaloneGenericClass;
@@ -33,14 +34,12 @@ import com.leonovich.winter.io.testdata.NonGenericInterface;
 import com.leonovich.winter.io.testdata.TestData;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -53,16 +52,7 @@ import java.util.stream.Stream;
  * @version 1.0
  */
 @Log4j2
-class ApplicationContextTests {
-    private static ApplicationContext context;
-
-    @BeforeAll
-    static void beforeAll() {
-        Config config = new JavaConfig("com.leonovich.winter.io.testdata", new HashMap<>());
-        context = new ApplicationContext(config);
-        ObjectFactory factory = new ObjectFactory(context);
-        context.setFactory(factory);
-    }
+class ApplicationContextTests extends WinterIoAbstractTests {
 
     private static Stream<Arguments> getObjectReturnsNotNullSource() {
         return Stream.of(
@@ -76,7 +66,7 @@ class ApplicationContextTests {
     @ParameterizedTest
     @MethodSource("getObjectReturnsNotNullSource")
     void testGetObjectReturnsNotNull(final Class<?> input) {
-        Object instance = context.getObject(input);
+        Object instance = context().getObject(input);
         Assertions.assertNotNull(instance,
             String.format(
                 "Expected to get new instance from %s class, but was NULL.",
@@ -88,7 +78,7 @@ class ApplicationContextTests {
     @Test
     @SuppressWarnings("unchecked")
     void testGetObjectReturnsProperSingleGenericInstance() {
-        GenericInterface<TestData> instance = context.getObject(GenericInterface.class, List.of(TestData.class));
+        GenericInterface<TestData> instance = context().getObject(GenericInterface.class, List.of(TestData.class));
 
         if (log.isDebugEnabled()) {
             log.debug("Retrieved instance of {}", instance.getClass().getSimpleName());
@@ -106,7 +96,7 @@ class ApplicationContextTests {
     @Test
     @SuppressWarnings("unchecked")
     void testGetObjectReturnsProperMultipleGenericInstance() {
-        MultiGenericInterface<BigInteger, TestData> instance = context.getObject(
+        MultiGenericInterface<BigInteger, TestData> instance = context().getObject(
             MultiGenericInterface.class,
             List.of(BigInteger.class, TestData.class)
         );
@@ -126,7 +116,7 @@ class ApplicationContextTests {
 
     @Test
     void testGetObjectReturnsProperNonGenericInstance() {
-        NonGenericInterface instance = context.getObject(NonGenericInterface.class);
+        NonGenericInterface instance = context().getObject(NonGenericInterface.class);
 
         if (log.isDebugEnabled()) {
             log.debug("Retrieved instance of {}", instance.getClass().getSimpleName());
