@@ -1,7 +1,8 @@
 # WINTER-IO
 
 ## About
-Here is the custom DI/IoC framework, implemented in order to understand better the concepts of basic functionality provided by the Spring framework.
+Here is the custom DI/IoC framework, implemented in order to dive into concepts 
+of core functionality provided by the [spring](https://github.com/spring-io) framework.
 
 ### Getting Started
 ```bash
@@ -15,3 +16,7 @@ Add dependency to your project:
     <version>${winter.version}</version>
 </dependency>
 ```
+
+### Latest Release
+
+2022.04.01-SNAPSHOT
