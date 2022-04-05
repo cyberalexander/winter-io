@@ -51,7 +51,7 @@
         <!-- ============== Plugins versions =================== -->
         <pmd.plugin.verion>3.15.0</pmd.plugin.verion>
         <checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
-        <checkstyle.version>9.2</checkstyle.version>
+        <checkstyle.version>10.0</checkstyle.version>
     </properties>
     <dependencies>
         <dependency>
@@ -126,6 +126,11 @@
             <version>${cactoos-matchers.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -179,6 +184,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
