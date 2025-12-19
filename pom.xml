@@ -38,7 +38,7 @@
         <main>com.leonovich.winter.io.WinterIo</main>
 
         <!-- ============== Dependencies versions ============== -->
-        <log4j.version>2.18.0</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
         <reflections.version>0.10.2</reflections.version>
         <apache.commons.version>4.4</apache.commons.version>
         <lombok.version>1.18.24</lombok.version>
